@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, doc, setDoc, CollectionReference, serverTimestamp, query, orderBy, onSnapshot, Query, DocumentData, QuerySnapshot } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User } from "firebase/auth";
+import { getFirestore, collection, doc, setDoc, CollectionReference, serverTimestamp, query, orderBy, onSnapshot, Query, DocumentData, QuerySnapshot, DocumentReference } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User, onAuthStateChanged, NextOrObserver, signOut } from "firebase/auth";
 import { StorageReference, getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getFunctions } from "firebase/functions";
 
@@ -20,6 +20,8 @@ const analytics = getAnalytics(app);
 
 const db = getFirestore(app);
 const dbCollection = (name: string) => collection(db, name);
+const dbSubCollection = (ref: DocumentReference<DocumentData, DocumentData>, name: string) => collection(ref, name);
+const dbDoc = (col: string, id: string) => doc(db, col, id);
 const dbAdd = (ref: CollectionReference, id: string, object: Object) => setDoc(doc(ref, id), object);
 const dbOrderBy = (ref: CollectionReference, prop: string) => query(ref, orderBy(prop, 'desc'));
 const dbOnSnapshot = (query: Query<unknown, DocumentData>, action: ((snapshot: QuerySnapshot<unknown, DocumentData>) => void)) => onSnapshot(query, action)
@@ -31,10 +33,12 @@ const authUpdate = (user: User,
     displayName?: string | null | undefined;
     photoURL?: string | null | undefined;
   }) => updateProfile(user, { displayName, photoURL: photoUrl })
+const authOnStateChanged = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback)
+const authSignOut = (success: (val: any) => void, error?: () => void) => signOut(auth).then(success).catch(error)
 const storage = getStorage(app);
 const storageRef = (location: string | undefined) => ref(storage, location);
 const storagePut = (ref: StorageReference, data: File | Blob | Uint8Array | ArrayBuffer ) => uploadBytesResumable(ref, data)
 const getURL = (ref: StorageReference) => getDownloadURL(ref)
 const functions = getFunctions(app);
 
-export {dbCollection, dbAdd, dbOrderBy, dbOnSnapshot, authCreate, authSignIn, authUpdate, storageRef, storagePut, getURL, functions, serverTimestamp}
+export {dbCollection, dbSubCollection, dbAdd, dbDoc, dbOrderBy, dbOnSnapshot, authCreate, authSignIn, authUpdate, authOnStateChanged, authSignOut, storageRef, storagePut, getURL, functions, serverTimestamp}

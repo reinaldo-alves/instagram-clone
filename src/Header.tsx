@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { authCreate, authSignIn, authUpdate, storageRef, storagePut, getURL, dbCollection, dbAdd, serverTimestamp } from './firebase'
+import { authCreate, authSignIn, authUpdate, storageRef, storagePut, getURL, dbCollection, dbAdd, serverTimestamp, authSignOut } from './firebase'
 import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
@@ -72,11 +72,21 @@ function Header(props: IProps) {
         authSignIn(email, senha)
             .then((auth) => {
                 props.setUser(auth.user.displayName);
-                alert(`Usuário ${auth.user.displayName} logado com sucesso!`)                
+                alert(`Usuário ${auth.user.displayName} logado com sucesso!`);
+                window.location.href = '/';          
             })
             .catch((error) => {
                 alert(error.message)
             });
+    }
+
+    function handleLogout(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+        e.preventDefault();
+        authSignOut((val) => {
+            props.setUser(null);
+            alert('Você escolheu sair!');
+            window.location.href = '/';
+        })
     }
 
     function uploadPost(e: React.FormEvent<HTMLFormElement>) {
@@ -105,6 +115,7 @@ function Header(props: IProps) {
                     if(formUpload){
                         formUpload.reset();
                     }
+                    fecharModalUpload();
                 })
             })
 
@@ -146,19 +157,20 @@ function Header(props: IProps) {
             </div>
             {props.user ? 
                 <div className='header_logadoInfo'>
-                <span>Olá, <b>{props.user}</b></span>
-                <a onClick={(e) => abrirModalUpload(e)} href="#">Postar!</a>
+                    <span>Olá, <b>{props.user}</b></span>
+                    <a onClick={(e) => abrirModalUpload(e)} href="#">Postar!</a>
+                    <a onClick={(e) => handleLogout(e)} href="#">Sair</a>
                 </div>
             :  
                 <div className="header_loginForm">
-                <form onSubmit={(e) => handleLogin(e)}>
-                    <input id='email-login' type="text" placeholder='Login...' />
-                    <input id='senha-login' type="password" placeholder='Senha...' />
-                    <input type="submit" name='action' placeholder='Entrar!' />
-                </form>
-                <div className="btn_criarConta">
-                    <a onClick={(e) => abrirModalCriarConta(e)} href="#">Criar Conta!</a>
-                </div>
+                    <form onSubmit={(e) => handleLogin(e)}>
+                        <input id='email-login' type="text" placeholder='Login...' />
+                        <input id='senha-login' type="password" placeholder='Senha...' />
+                        <input type="submit" name='action' placeholder='Entrar!' />
+                    </form>
+                    <div className="btn_criarConta">
+                        <a onClick={(e) => abrirModalCriarConta(e)} href="#">Criar Conta!</a>
+                    </div>
                 </div>
             }
             </div>
