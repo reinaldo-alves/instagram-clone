@@ -12,11 +12,11 @@ function App() {
 
   useEffect(() => {
     authOnStateChanged((val) => {
-      if(val) {
+      if(val !== null) {
         setUser(val.displayName)
       }
     })
-    const dbQuery = dbOrderBy(dbCollection("posts"), 'timestamp');
+    const dbQuery = dbOrderBy(dbCollection("posts"), 'timestamp', 'desc');
     const unsubscribe = dbOnSnapshot(dbQuery, (querySnapshot) => {
       const posts: IPost[] = [];
       querySnapshot.forEach((doc) => {

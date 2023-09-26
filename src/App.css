@@ -137,6 +137,7 @@ header {
     background-color: white;
     max-width: 700px;
     margin: 10px auto;
+    padding-bottom: 40px;
 }
 
 .postSingle img {
@@ -170,4 +171,19 @@ header {
     border: 0;
     padding: 8px 10px;
     text-align: right;
+}
+
+.comments {
+    margin: 0 20px;
+}
+
+.comments h2 {
+    color: #4b4b4b;
+    font-size: 18px;
+    border-bottom: 1px solid #4b4b4b;
+    padding: 8px 0;
+}
+
+.comment-single p {
+    font-size: 14px;
 }

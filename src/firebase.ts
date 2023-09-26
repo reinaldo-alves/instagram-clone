@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, doc, setDoc, CollectionReference, serverTimestamp, query, orderBy, onSnapshot, Query, DocumentData, QuerySnapshot, DocumentReference } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc, CollectionReference, serverTimestamp, query, orderBy, onSnapshot, Query, DocumentData, QuerySnapshot, DocumentReference, OrderByDirection } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User, onAuthStateChanged, NextOrObserver, signOut } from "firebase/auth";
 import { StorageReference, getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getFunctions } from "firebase/functions";
@@ -23,7 +23,7 @@ const dbCollection = (name: string) => collection(db, name);
 const dbSubCollection = (ref: DocumentReference<DocumentData, DocumentData>, name: string) => collection(ref, name);
 const dbDoc = (col: string, id: string) => doc(db, col, id);
 const dbAdd = (ref: CollectionReference, id: string, object: Object) => setDoc(doc(ref, id), object);
-const dbOrderBy = (ref: CollectionReference, prop: string) => query(ref, orderBy(prop, 'desc'));
+const dbOrderBy = (ref: CollectionReference, prop: string, order: OrderByDirection) => query(ref, orderBy(prop, order));
 const dbOnSnapshot = (query: Query<unknown, DocumentData>, action: ((snapshot: QuerySnapshot<unknown, DocumentData>) => void)) => onSnapshot(query, action)
 const auth = getAuth(app);
 const authCreate = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
