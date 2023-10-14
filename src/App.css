@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: rgb(200, 200, 200);
-}
-
 header {
     padding: 10px 0;
     background-color: white;
@@ -79,17 +75,27 @@ header {
     border-radius: 10px;
 }
 
-.modalCriarConta, .modalUpload {
+.modalCriarConta, .modalUpload, .modalPost {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
-.formCriarConta, .formUpload {
+/* .modalPost {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+} */
+
+.formCriarConta, .formUpload, .formPost {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -99,6 +105,7 @@ header {
     width: 80%;
     max-width: 700px;
     text-align: center;
+    border-radius: 4px;
 }
 
 .formCriarConta h2, .formUpload h2 {
@@ -121,8 +128,8 @@ header {
 
 .close-modal {
     position: absolute;
-    right: -10px;
-    top: -10px;
+    right: 10px;
+    top: 10px;
     cursor: pointer;
     width: 30px;
     height: 30px;
@@ -135,55 +142,158 @@ header {
 
 .postSingle {
     background-color: white;
-    max-width: 700px;
+    max-width: 470px;
     margin: 10px auto;
-    padding-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ccc;
+}
+
+.postHeader, .postHeaderModal {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    padding: 10px 0;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.postHeader img, .postHeaderModal img {
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
 }
 
 .postSingle img {
     width: 100%;
 }
 
-.postSingle p {
-    padding: 10px;
+.postSingle > p {
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+.postSingle > p b, .titleContainer > p b, .comment-single > p b {
+    padding-right: 8px;
+    cursor: pointer;
 }
 
 .postSingle form {
-    padding: 10px;
+    padding: 10px 0;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
 }
 
 .postSingle textarea {
     width: 100%;
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 10px;
+    height: 17px;
+    border: none;
     resize: none;
+    font-family: inherit;
+    outline: none;
+    overflow: hidden;
 }
 
 .postSingle input[type=submit] {
-    background-color: #0095f6;
+    display: none;
+    background-color: white;
     cursor: pointer;
-    color: white;
+    color: #0095f6;
     border: 0;
-    padding: 8px 10px;
-    text-align: right;
+    font-weight: bold;
+}
+
+.commentsNumber {
+    color: #4b4b4b;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .comments {
-    margin: 0 20px;
-}
-
-.comments h2 {
-    color: #4b4b4b;
-    font-size: 18px;
-    border-bottom: 1px solid #4b4b4b;
-    padding: 8px 0;
-}
-
-.comment-single p {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
     font-size: 14px;
+    gap: 5px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.comment-single {
+    text-align: left;
+}
+
+.formPost {
+    padding: 0;
+    background-color: black;
+    min-height: 450px;
+    max-width: 1200px;
+    width: calc(100% - 130px);
+    height: calc(100% - 80px);
+    display: flex;
+    align-items: center;
+}
+
+.formPost img {
+    max-width: calc(100% - 400px);
+    max-height: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+.modalPostInfo {
+    min-width: 400px;
+    width: 50%;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    padding: 14px;
+    height: 100%;
+}
+
+.modalPostInfo form {
+    padding-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.postHeaderModal {
+    /* display: grid;
+    grid-template-columns: auto 1fr auto;
+    padding: 10px 0;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px; */
+    justify-items: flex-start;
+    padding: 4px 0 14px 0;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+
+.titleContainer {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.titleContainer > p:last-child, .comment-single > p:last-child {
+    color: #4b4b4b;
+    font-size: 12px;
+}
+
+@media (max-width: 490px) {
+    .postHeader, .postSingle > p, .postSingle form {
+        padding: 10px;
+    }
 }

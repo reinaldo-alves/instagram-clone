@@ -33,7 +33,7 @@ function App() {
       {
         posts.map((val) => {
           return (
-            <Post user={user} info={val.info} id={val.id} />
+            <Post key={val.id} user={user} info={val.info} id={val.id} />
           )
         })
       }
@@ -42,3 +42,5 @@ function App() {
 }
 
 export default App;
+
+//Corrigir deformação da imagem no modal da postagem (pegar dicas no youtube clone)

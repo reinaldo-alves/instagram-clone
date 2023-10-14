@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { authCreate, authSignIn, authUpdate, storageRef, storagePut, getURL, dbCollection, dbAdd, serverTimestamp, authSignOut } from './firebase'
 import { v4 as uuidv4 } from 'uuid';
+import { abrirModal, fecharModal } from './functions';
 
 interface IProps {
     user: any
@@ -12,36 +13,6 @@ function Header(props: IProps) {
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState<File | null>(null);
     
-    function abrirModalCriarConta(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>){
-        e.preventDefault();
-        const modal = document.querySelector('.modalCriarConta') as HTMLElement;
-        if(modal){
-            modal.style.display = 'block';
-        }
-    }
-
-    function abrirModalUpload(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>){
-        e.preventDefault();
-        const modal = document.querySelector('.modalUpload') as HTMLElement;
-        if(modal){
-            modal.style.display = 'block';
-        }
-    }
-
-    function fecharModalCriar() {
-        const modal = document.querySelector('.modalCriarConta') as HTMLElement;
-        if(modal){
-            modal.style.display = 'none';
-        }
-    }
-
-    function fecharModalUpload() {
-        const modal = document.querySelector('.modalUpload') as HTMLElement;
-        if(modal){
-            modal.style.display = 'none';
-        }
-    }
-
     function criarConta(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const emailInput = document.getElementById('email-cadastro') as HTMLInputElement;
@@ -56,7 +27,7 @@ function Header(props: IProps) {
                     displayName: username
                 })
                 alert('Conta criada com sucesso!');
-                fecharModalCriar();
+                fecharModal('.modalCriarConta');
             })
             .catch((error) => {
                 alert(error.message)
@@ -115,7 +86,7 @@ function Header(props: IProps) {
                     if(formUpload){
                         formUpload.reset();
                     }
-                    fecharModalUpload();
+                    fecharModal('.modalUpload');
                 })
             })
 
@@ -126,8 +97,8 @@ function Header(props: IProps) {
     return (
         <header>
             <div className="modalCriarConta">
+                <div onClick={() => fecharModal('.modalCriarConta')} className="close-modal">X</div>
                 <div className="formCriarConta">
-                    <div onClick={() => fecharModalCriar()} className="close-modal">X</div>
                     <h2>Criar Conta</h2>
                     <form onSubmit={(e) => criarConta(e)}>
                         <input id='email-cadastro' type="text" placeholder='Seu e-mail...' />
@@ -139,8 +110,8 @@ function Header(props: IProps) {
             </div>
 
             <div className="modalUpload">
+                <div onClick={() => fecharModal('.modalUpload')} className="close-modal">X</div>
                 <div className="formUpload">
-                    <div onClick={() => fecharModalUpload()} className="close-modal">X</div>
                     <h2>Fazer Upload</h2>
                     <form id='form-upload' onSubmit={(e) => uploadPost(e)}>
                         <progress id='progress-upload' value={progress}></progress>
@@ -158,7 +129,7 @@ function Header(props: IProps) {
             {props.user ? 
                 <div className='header_logadoInfo'>
                     <span>Olá, <b>{props.user}</b></span>
-                    <a onClick={(e) => abrirModalUpload(e)} href="#">Postar!</a>
+                    <a onClick={(e) => abrirModal(e, '.modalUpload')} href="#">Postar!</a>
                     <a onClick={(e) => handleLogout(e)} href="#">Sair</a>
                 </div>
             :  
@@ -169,7 +140,7 @@ function Header(props: IProps) {
                         <input type="submit" name='action' placeholder='Entrar!' />
                     </form>
                     <div className="btn_criarConta">
-                        <a onClick={(e) => abrirModalCriarConta(e)} href="#">Criar Conta!</a>
+                        <a onClick={(e) => abrirModal(e, '.modalCriarConta')} href="#">Criar Conta!</a>
                     </div>
                 </div>
             }
