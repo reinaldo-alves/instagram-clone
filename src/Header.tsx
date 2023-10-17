@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { authCreate, authSignIn, authUpdate, storageRef, storagePut, getURL, dbCollection, dbAdd, serverTimestamp, authSignOut } from './firebase'
+import { storageRef, storagePut, getURL, dbCollection, dbAdd, serverTimestamp, authSignOut } from './firebase'
 import { v4 as uuidv4 } from 'uuid';
 import { abrirModal, fecharModal } from './functions';
 
@@ -12,44 +12,6 @@ function Header(props: IProps) {
     
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState<File | null>(null);
-    
-    function criarConta(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        const emailInput = document.getElementById('email-cadastro') as HTMLInputElement;
-        const usernameInput = document.getElementById('username-cadastro') as HTMLInputElement;
-        const senhaInput = document.getElementById('senha-cadastro') as HTMLInputElement;
-        const email = emailInput? emailInput.value : '';
-        const username = usernameInput? usernameInput.value: '';
-        const senha = senhaInput? senhaInput.value: '';
-        authCreate(email, senha)
-            .then((authUser) => {
-                authUpdate(authUser.user, {
-                    displayName: username
-                })
-                alert('Conta criada com sucesso!');
-                fecharModal('.modalCriarConta');
-            })
-            .catch((error) => {
-                alert(error.message)
-            });
-    }
-
-    function handleLogin(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        const emailInput = document.getElementById('email-login') as HTMLInputElement;
-        const senhaInput = document.getElementById('senha-login') as HTMLInputElement;
-        const email = emailInput? emailInput.value : '';
-        const senha = senhaInput? senhaInput.value: '';
-        authSignIn(email, senha)
-            .then((auth) => {
-                props.setUser(auth.user.displayName);
-                alert(`Usuário ${auth.user.displayName} logado com sucesso!`);
-                window.location.href = '/';          
-            })
-            .catch((error) => {
-                alert(error.message)
-            });
-    }
 
     function handleLogout(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
         e.preventDefault();
@@ -96,19 +58,6 @@ function Header(props: IProps) {
     
     return (
         <header>
-            <div className="modalCriarConta">
-                <div onClick={() => fecharModal('.modalCriarConta')} className="close-modal">X</div>
-                <div className="formCriarConta">
-                    <h2>Criar Conta</h2>
-                    <form onSubmit={(e) => criarConta(e)}>
-                        <input id='email-cadastro' type="text" placeholder='Seu e-mail...' />
-                        <input id='username-cadastro' type="text" placeholder='Seu username...' />
-                        <input id='senha-cadastro' type="password" placeholder='Sua senha...' />
-                        <input type="submit" value='Criar Conta!' />
-                    </form>
-                </div>
-            </div>
-
             <div className="modalUpload">
                 <div onClick={() => fecharModal('.modalUpload')} className="close-modal">X</div>
                 <div className="formUpload">
@@ -123,27 +72,14 @@ function Header(props: IProps) {
             </div>
             
             <div className="center">
-            <div className="header_logo">
-                <a href=''><img src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png' /></a>
-            </div>
-            {props.user ? 
+                <div className="header_logo">
+                    <a href=''><img src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png' /></a>
+                </div>
                 <div className='header_logadoInfo'>
                     <span>Olá, <b>{props.user}</b></span>
                     <a onClick={(e) => abrirModal(e, '.modalUpload')} href="#">Postar!</a>
                     <a onClick={(e) => handleLogout(e)} href="#">Sair</a>
                 </div>
-            :  
-                <div className="header_loginForm">
-                    <form onSubmit={(e) => handleLogin(e)}>
-                        <input id='email-login' type="text" placeholder='Login...' />
-                        <input id='senha-login' type="password" placeholder='Senha...' />
-                        <input type="submit" name='action' placeholder='Entrar!' />
-                    </form>
-                    <div className="btn_criarConta">
-                        <a onClick={(e) => abrirModal(e, '.modalCriarConta')} href="#">Criar Conta!</a>
-                    </div>
-                </div>
-            }
             </div>
         </header> 
     )

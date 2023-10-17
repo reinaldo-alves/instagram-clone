@@ -4,6 +4,7 @@ import Header from './Header';
 import Post from './Post'
 import { authOnStateChanged, dbCollection, dbOnSnapshot, dbOrderBy } from './firebase';
 import { IPost } from './types';
+import Login from './Login';
 
 function App() {
 
@@ -29,18 +30,22 @@ function App() {
 
   return (
     <div className="App">
-      <Header user={user} setUser={setUser}/>
-      {
-        posts.map((val) => {
-          return (
-            <Post key={val.id} user={user} info={val.info} id={val.id} />
-          )
-        })
+      {user ?
+        <>        
+          <Header user={user} setUser={setUser}/>
+          {
+            posts.map((val) => {
+              return (
+                <Post key={val.id} user={user} info={val.info} id={val.id} />
+              )
+            })
+          }
+        </>
+      :
+        <Login user={user} setUser={setUser}/>
       }
     </div>
   );
 }
 
 export default App;
-
-//Corrigir deformação da imagem no modal da postagem (pegar dicas no youtube clone)
