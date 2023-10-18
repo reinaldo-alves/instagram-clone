@@ -37,3 +37,15 @@ export function abrirModal(e: React.MouseEvent<HTMLAnchorElement | HTMLDivElemen
         modal.style.display = 'block';
     }
 }
+
+export const handleTextareaHeight = (id: string, e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.target.style.height = '1em';
+    e.target.style.height = e.target.scrollHeight + 'px';
+    const submitEl = document.getElementById(id) as HTMLInputElement;
+    if(!e.target.value) {
+        submitEl.style.display = 'none'
+    } else {
+        submitEl.style.display = 'block'
+    }
+}

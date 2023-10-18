@@ -5,16 +5,17 @@ import Post from './Post'
 import { authOnStateChanged, dbCollection, dbOnSnapshot, dbOrderBy } from './firebase';
 import { IPost } from './types';
 import Login from './Login';
+import { User } from 'firebase/auth';
 
 function App() {
 
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState([] as Array<IPost>);
 
   useEffect(() => {
     authOnStateChanged((val) => {
       if(val !== null) {
-        setUser(val.displayName)
+        setUser(val)
       }
     })
     const dbQuery = dbOrderBy(dbCollection("posts"), 'timestamp', 'desc');
@@ -30,16 +31,16 @@ function App() {
 
   return (
     <div className="App">
-      {user ?
+      {user?.displayName ?
         <>        
           <Header user={user} setUser={setUser}/>
-          {
-            posts.map((val) => {
-              return (
-                <Post key={val.id} user={user} info={val.info} id={val.id} />
-              )
-            })
-          }
+          <div className="postsContainer">
+            {posts.map((val) => {
+                return (
+                  <Post key={val.id} user={user} info={val.info} id={val.id} />
+                )
+              })}
+          </div>
         </>
       :
         <Login user={user} setUser={setUser}/>
