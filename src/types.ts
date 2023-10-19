@@ -10,7 +10,6 @@ export interface IPost {
     },
     titulo: string,
     userName: string,
-    userId: string,
     profileImage: string
   },
   user?: User | null
@@ -21,8 +20,19 @@ export interface IComent {
   info: {
     nome: string,
     image: string,
-    userId: string,
     comentario: string,
+    timestamp: {
+      seconds: number;
+      nanoseconds: number;
+    }
+  }
+}
+
+export interface ILike {
+  id: string,
+  info: {
+    userName: string,
+    profileImage: string,
     timestamp: {
       seconds: number;
       nanoseconds: number;

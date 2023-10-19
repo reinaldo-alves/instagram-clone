@@ -41,7 +41,6 @@ function Header(props: IProps) {
                         image: downloadURL,
                         userName: props.user.displayName,
                         profileImage: props.user.photoURL,
-                        userId: props.user.uid,
                         timestamp: serverTimestamp()
                     })
                     setProgress(0);

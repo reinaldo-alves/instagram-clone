@@ -50,9 +50,9 @@ function PostModal(props: IProps) {
                         {props.comentarios ?
                             props.comentarios.map((val) => {
                                 return (
-                                    <div className="commentBox">
+                                    <div key={val.id} className="commentBox">
                                         <img src={val.info.image} alt={val.info.nome} />
-                                        <div key={val.id} className="comment-single">
+                                        <div className="comment-single">
                                             <p><b>{val.info.nome}</b>{val.info.comentario}</p>
                                             <p>{convertTime(val.info.timestamp).toString()}</p>
                                         </div>
