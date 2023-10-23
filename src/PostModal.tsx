@@ -1,11 +1,15 @@
 import { dbAdd, dbDoc, dbSubCollection, serverTimestamp } from "./firebase";
 import { v4 as uuidv4 } from 'uuid';
-import { IComent, IPost } from "./types"
-import { convertTime, fecharModal, handleTextareaHeight } from "./functions";
+import { IComent, ILike, IPost } from "./types"
+import { abrirModal, convertTime, curtir, fecharModal, handleTextareaHeight } from "./functions";
+import emptyHeart from "./images/coracao.png"
+import fullHeart from "./images/coracao1.png"
+import commentIcon from "./images/comment.png"
 
 interface IProps {
     post: IPost,
-    comentarios: Array<IComent>
+    comentarios: Array<IComent>,
+    curtidas: Array<ILike>
 }
 
 function PostModal(props: IProps) {
@@ -27,6 +31,8 @@ function PostModal(props: IProps) {
         alert('Comentário postado com sucesso!');
         currentCommentEl.value = '';
     }
+
+    const jaCurtiu = props.curtidas.some((item: ILike) => item.info.userId === props.post.user?.uid)
     
     return (
         <div className="modalPost" id={`modal-${props.post.id}`}>
@@ -60,6 +66,15 @@ function PostModal(props: IProps) {
                                 )
                             })
                         : ''}
+                    </div>
+                    <div className="curtidaContainer">
+                    <div className="post-btn">
+                        <img id={`likeModal-${props.post.id}`} onClick={(e) => curtir(props.post.id, e, props.post)} src={jaCurtiu? fullHeart : emptyHeart} alt="like" />
+                        <img src={commentIcon} alt="comment" />
+                    </div>
+                    {props.curtidas.length ? 
+                        <div className="likedby" onClick={(e) => abrirModal(e, `#likesModal-${props.post.id}`)}>Curtido por <b>{props.curtidas[0].info.userName}</b>{props.curtidas.length > 1 ? ' e outros' : ''}</div>
+                    : <div></div>}
                     </div>
                     {props.post.user?
                         <form onSubmit={(e) => comentar(props.post.id, e)}>

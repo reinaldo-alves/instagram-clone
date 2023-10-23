@@ -32,6 +32,7 @@ export interface ILike {
   id: string,
   info: {
     userName: string,
+    userId: string,
     profileImage: string,
     timestamp: {
       seconds: number;

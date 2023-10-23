@@ -2,7 +2,7 @@ import { dbAdd, dbDoc, dbOnSnapshot, dbOrderBy, dbSubCollection, serverTimestamp
 import { v4 as uuidv4 } from 'uuid';
 import { IComent, ILike, IPost } from "./types"
 import { useEffect, useState } from "react";
-import { abrirModal, convertTime, fecharModal, handleTextareaHeight } from "./functions";
+import { abrirModal, convertTime, curtir, fecharModal, handleTextareaHeight } from "./functions";
 import PostModal from "./PostModal";
 import emptyHeart from "./images/coracao.png"
 import fullHeart from "./images/coracao1.png"
@@ -54,25 +54,8 @@ function Post(props: IPost) {
         currentCommentEl.value = '';
     }
 
-    const curtir = (id: string, e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-        e.preventDefault();
-        const elementId = `like-${id}`;
-        const heartEl = document.getElementById(elementId) as HTMLImageElement;
-        if (heartEl.src === fullHeart) {
-            alert('Você já curtiu esse post')
-        } else {
-            const postsRef = dbDoc('posts', id);
-            const likeCol = dbSubCollection(postsRef, 'curtidas')
-            dbAdd(likeCol, uuidv4(), {
-                userName: props.user?.displayName,
-                profileImage: props.user?.photoURL,
-                timestamp: serverTimestamp()
-            });
-            alert('Foto curtida com sucesso!');
-            heartEl.src = fullHeart;
-        }
-    }
-    
+    const jaCurtiu = curtidas.some((item: ILike) => item.info.userId === props.user?.uid)
+   
     return (
         <div className="postSingle">
 
@@ -91,7 +74,7 @@ function Post(props: IPost) {
                 </div>
             </div>
 
-            <PostModal post={props} comentarios={comentarios} />
+            <PostModal post={props} comentarios={comentarios} curtidas={curtidas} />
 
             <div className="postHeader">
                 <img src={props.info.profileImage} alt={props.info.userName} />
@@ -100,7 +83,7 @@ function Post(props: IPost) {
             </div>
             <img src={props.info.image} alt={props.id} />
             <div className="post-btn">
-                <img id={`like-${props.id}`} onClick={(e) => curtir(props.id, e)} src={emptyHeart} alt="like" />
+                <img id={`like-${props.id}`} onClick={(e) => curtir(props.id, e, props)} src={jaCurtiu? fullHeart : emptyHeart} alt="like" />
                 <img onClick={(e) => abrirModal(e, `#modal-${props.id}`)} src={commentIcon} alt="comment" />
             </div>
             {curtidas.length ? 

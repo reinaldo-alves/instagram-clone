@@ -107,6 +107,10 @@ aside:hover .header_icons .option-item span {
     z-index: 2;
 }
 
+.modalLikes {
+    z-index: 3;
+}
+
 .formCriarConta, .formUpload, .formPost, .formLikes {
     position: absolute;
     left: 50%;
@@ -289,6 +293,7 @@ textarea {
     padding: 0;
     background-color: black;
     min-height: 450px;
+    max-height: 90%;
     max-width: 1200px;
     width: calc(100% - 130px);
     height: calc(100% - 80px);
@@ -309,7 +314,7 @@ textarea {
     width: 100%;
     max-width: 100%;
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto auto;
     flex-direction: column;
     align-items: flex-start;
     background-color: white;
@@ -436,6 +441,14 @@ textarea {
     text-decoration: none;
 }
 
+.curtidaContainer {
+    padding-bottom: 14px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 footer {
     margin-bottom: 50px;
     margin-top: 10px;
@@ -445,9 +458,67 @@ footer {
     color: #737373;
 }
 
-@media (max-width: 786px) {
+@media (max-width: 768px) {
     .imageLogin {
         display: none;
+    }
+
+    aside {
+        bottom: 0;
+        left: 0;
+        top: auto;
+        width: 100%;
+        height: 60px;
+        padding: auto 12px;
+        border-right: none;
+        border-top: 1px solid rgb(220, 220, 220);
+        transition: 0;
+    }
+
+    aside:hover {
+        width: 100%;
+    }
+
+    .header_logo {
+        display: none;
+    }
+
+    .header_icons {
+        flex-direction: row-reverse;
+        justify-content: space-around;
+    }
+
+    .option-item {
+        justify-content: center;
+        width: auto;
+        padding: 5px;
+    }
+
+    .option-item:hover {
+        background-color: white;
+    }
+    
+    aside:hover .header_icons .option-item span {
+        display: none;
+    }
+
+    .postsContainer {
+        width: 100%;
+        padding-bottom: 60px;
+    }
+
+    .formPost {
+        flex-direction: column;
+    }
+
+    .formPost > img {
+        max-width: 100%;
+        max-height: 50%;
+    }
+
+    .modalPostInfo {
+        min-width: 0;
+        overflow-y: auto;
     }
 }
 

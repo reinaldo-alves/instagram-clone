@@ -1,4 +1,8 @@
 import moment from "moment";
+import { v4 as uuidv4 } from 'uuid';
+import { IPost } from "./types";
+import fullHeart from "./images/coracao1.png"
+import { dbAdd, dbDoc, dbSubCollection, serverTimestamp } from "./firebase";
 
 export function convertTime(time: {seconds: number, nanoseconds: number}) {
     const now = moment();
@@ -47,5 +51,25 @@ export const handleTextareaHeight = (id: string, e: React.ChangeEvent<HTMLTextAr
         submitEl.style.display = 'none'
     } else {
         submitEl.style.display = 'block'
+    }
+}
+
+export const curtir = (id: string, e: React.MouseEvent<HTMLImageElement, MouseEvent>, post: IPost) => {
+    e.preventDefault();
+    const elementId = `like-${id}`;
+    const elementModalId = `likeModal-${id}`;
+    const heartEl = document.getElementById(elementId) as HTMLImageElement;
+    const heartModalEl = document.getElementById(elementModalId) as HTMLImageElement;
+    if (heartEl.src !== fullHeart || heartModalEl.src !== fullHeart) {
+        const postsRef = dbDoc('posts', id);
+        const likeCol = dbSubCollection(postsRef, 'curtidas')
+        dbAdd(likeCol, uuidv4(), {
+            userName: post.user?.displayName,
+            userId: post.user?.uid,
+            profileImage: post.user?.photoURL,
+            timestamp: serverTimestamp()
+        });
+        heartEl.src = fullHeart;
+        heartModalEl.src = fullHeart;
     }
 }
