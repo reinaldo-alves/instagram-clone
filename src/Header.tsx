@@ -63,7 +63,7 @@ function Header(props: IProps) {
             <div className="modalUpload">
                 <div onClick={() => fecharModal('.modalUpload')} className="close-modal">X</div>
                 <div className="formUpload">
-                    <h2>Fazer Upload</h2>
+                    <h2>Postar Foto</h2>
                     <form id='form-upload' onSubmit={(e) => uploadPost(e)}>
                         <progress id='progress-upload' value={progress}></progress>
                         <input id='titulo-upload' type="text" placeholder='Nome da sua foto...' />
