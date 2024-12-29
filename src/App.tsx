@@ -6,9 +6,11 @@ import { authOnStateChanged, dbCollection, dbOnSnapshot, dbOrderBy } from './fir
 import { IPost } from './types';
 import Login from './Login';
 import { User } from 'firebase/auth';
+import Profile from './Profile';
 
 function App() {
 
+  const [showProfile, setShowProfile] = useState(false)
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState([] as Array<IPost>);
 
@@ -33,15 +35,19 @@ function App() {
     <div className="App">
       {user?.displayName ?
         <>        
-          <Header user={user} setUser={setUser}/>
+          <Header user={user} setUser={setUser} setShowProfile={setShowProfile} />
           <div className="postsContainer">
-            {posts.map((val) => {
+            {showProfile ?
+              <Profile user={user} posts={posts} showProfile={showProfile} setShowProfile={setShowProfile} />
+            :              
+              posts.map((val) => {
                 return (
                   <Post key={val.id} user={user} info={val.info} id={val.id} />
                 )
-              })}
+              })
+            }
           </div>
-        </>
+        </> 
       :
         <Login user={user} setUser={setUser}/>
       }

@@ -3,10 +3,14 @@ import { storageRef, storagePut, getURL, dbCollection, dbAdd, serverTimestamp, a
 import { v4 as uuidv4 } from 'uuid';
 import { abrirModal, fecharModal } from './functions';
 import { User } from 'firebase/auth';
+import { GoHome } from "react-icons/go";
+import { FaRegPlusSquare } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 
 interface IProps {
     user: User
     setUser: React.Dispatch<React.SetStateAction<any>>
+    setShowProfile: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function Header(props: IProps) {
@@ -75,21 +79,25 @@ function Header(props: IProps) {
             
             <div className="center">
                 <div className="header_logo">
-                    <a className='logo-name' href='/'><img src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png' /></a>
-                    <a className='logo-pict' href='/'><img src='https://seeklogo.com/images/I/instagram-logo-A807AD378B-seeklogo.com.png' /></a>
+                    <a className='logo-name' href='/'><img src='https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png' alt='Instagram' /></a>
+                    <a className='logo-pict' href='/'><img src='https://w7.pngwing.com/pngs/309/975/png-transparent-instagram-instagram-logo-logo-instagram-icon-thumbnail.png' alt='Instagram' /></a>
                 </div>
                 <div className='header_icons'>
-                    <div className="option-item">
-                        <img src={props.user.photoURL || ''} alt={props.user.displayName || ''} />
-                        <span><b>{props.user.displayName}</b></span>
+                    <div className="option-item" onClick={() => props.setShowProfile(false)}>
+                        <GoHome />
+                        <span>Home</span>
                     </div>
                     <div className="option-item" onClick={(e) => abrirModal(e, '.modalUpload')} >
-                        <img src='https://static-00.iconduck.com/assets.00/plus-square-icon-2048x2048-h144q2yx.png' alt='Postar!' />
+                        <FaRegPlusSquare />
                         <span>Postar</span>
                     </div>
                     <div className="option-item" onClick={(e) => handleLogout(e)} >
-                        <img src='https://cdn-icons-png.flaticon.com/512/126/126467.png' alt='Sair' />
+                        <MdLogout />
                         <span>Sair</span>
+                    </div>
+                    <div className="option-item" onClick={() => props.setShowProfile(true)}>
+                        <img src={props.user.photoURL || ''} alt={props.user.displayName || ''} />
+                        <span>Perfil</span>
                     </div>
                 </div>
             </div>

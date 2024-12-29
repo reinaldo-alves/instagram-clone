@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Lato';
+}
+
+.clear {
+    clear: both;
 }
 
 aside {
@@ -73,11 +80,11 @@ aside:hover .header_logo .logo-name {
     background-color: #eee;
 }
 
-.option-item:hover img {
+.option-item:hover img, .option-item:hover svg {
     transform: scale(1.1);
 }
 
-.option-item img {
+.option-item img, .option-item svg {
     width: 24px;
     max-width: 24px;
     min-width: 24px;
@@ -92,7 +99,7 @@ aside:hover .header_icons .option-item span {
     display: inline;
 }
 
-.header_icons .option-item:first-child img {
+.header_icons .option-item:last-child img {
     border-radius: 50%;
 }
 
@@ -458,6 +465,179 @@ footer {
     color: #737373;
 }
 
+section.feed > .center {
+    display: flex;
+    max-width: 900px;
+    padding: 0 2%;
+    margin: 0 auto;
+    flex-direction: row;
+    width: auto;
+}
+
+.perfil-descricao > .center {
+    display: block;
+    max-width: 900px;
+    padding: 0 2%;
+    margin: 0 auto;
+    width: auto;
+}
+
+section.profile-posts > .center {
+    display: flex;
+    max-width: 900px;
+    padding: 0 2%;
+    margin: 0 auto;
+    flex-direction: row;
+    width: auto;
+    flex-wrap: wrap;
+}
+
+.perfil-descricao {
+    margin-top: 50px;
+} 
+
+.perfil-descricao .img-perfil-wraper {
+    float: left;
+    width: 40%;
+    padding: 0 50px;
+}
+
+.perfil-descricao .img-perfil {
+    width: 150px;
+    height: 150px;
+    border: 3px solid white;
+    outline: 3px solid #ccc;
+    border-radius: 50%;
+}
+
+.perfil-descricao .texto-perfil {
+    float: left;
+    width: 60%;
+    display: flex;
+}
+
+.perfil-descricao .nome-perfil {
+    display: flex;
+    align-items: center;
+}
+
+.perfil-descricao .nome-perfil span {
+    font-size: 23px;
+    font-weight: 400;
+}
+
+.perfil-descricao .perfil-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.perfil-descricao .nome-perfil a.btn-primario {
+    text-decoration: none;
+    margin-left: 20px;
+    margin-right: 10px;
+    color: black;
+    padding: 8px 16px;
+    background-color: rgb(239,239,239);
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.perfil-descricao .nome-perfil a.icon {
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+    padding-top: 5px;
+}
+
+.perfil-descricao .info-perfil {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+}
+
+.perfil-descricao .info-perfil p {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.perfil-descricao .descricao-perfil h3 {
+    font-size: 16px;
+}
+
+.perfil-descricao .descricao-perfil p {
+    font-weight: 300;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+section.feed {
+    padding-top: 60px;
+}
+
+.line-feed {
+    border-top: 1px solid #ccc;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.single-line-name {
+    text-transform: uppercase;
+    margin: 20px;
+    position: relative;
+    font-size: 12px;
+    font-weight: 300;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.line-marcacao {
+    display: none;
+    position: absolute;
+    height: 1px;
+    background-color: black;
+    top: -20px;
+}
+
+.title-wraper {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+section.profile-posts .publicacao-single {
+    float: left;
+    width: 33.3%;
+    aspect-ratio: 1 / 1;
+    border: 4px solid rgb(245, 245, 245);
+    overflow: hidden;
+}
+
+section.profile-posts .publicacao-single img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#salvos, #marcados {
+    display: none;
+}
+
+.sem-publicacoes {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    font-weight: 600;
+}
+
+.sem-publicacoes svg {
+    font-size: 70px;
+    margin-bottom: 5px;
+}
+
 @media (max-width: 768px) {
     .imageLogin {
         display: none;
@@ -484,7 +664,7 @@ footer {
     }
 
     .header_icons {
-        flex-direction: row-reverse;
+        flex-direction: row;
         justify-content: space-around;
     }
 
@@ -520,11 +700,85 @@ footer {
         min-width: 0;
         overflow-y: auto;
     }
+
+    /* .perfil-descricao .center {
+        min-width: 350px;
+    } */
+
+    .perfil-descricao .img-perfil-wraper {
+        padding: 0 20px 20px 20px;
+        width: 30%;
+        min-width: 190px;
+    }
+
+    .perfil-descricao .texto-perfil {
+        width: auto;
+    }
+
+    .perfil-descricao .texto-perfil .nome-perfil {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .perfil-descricao .texto-perfil .nome-perfil .btn-primario {
+        margin-left: 0;
+    }
+
+    .perfil-descricao .info-perfil {
+        clear: both;
+        padding: 10px 0;
+        width: 100%;
+        max-width: none;
+        justify-content: space-around;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .perfil-descricao .info-perfil p {
+        text-align: center;
+    }
+
+    .perfil-descricao .info-perfil p b {
+        display: block;
+    }
+
+    section.feed {
+        padding-top: 20px;
+    }
+
+    .line-marcacao {
+        width: 20px !important;
+    }
+
+    .title-wraper svg {
+        font-size: 18px;
+    }
+
+    .title-wraper p {
+        display: none;
+    }
 }
 
 @media (max-width: 567px) {
     .postHeader, .postSingle > p, .postSingle form, .commentsNumber, .likedby, .post-btn {
         padding-left: 10px;
         padding-right: 10px;
+    }
+
+    .perfil-descricao .img-perfil-wraper {
+        width: 20px;
+        min-width: 130px;
+        padding-left: 10px;
+    }
+
+    .perfil-descricao .img-perfil {
+        width: 100px;
+        height: 100px;
+    }
+
+    .perfil-descricao .nome-perfil {
+        margin-bottom: 10px;
     }
 }

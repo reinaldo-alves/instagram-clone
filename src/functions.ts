@@ -42,6 +42,25 @@ export function abrirModal(e: React.MouseEvent<HTMLAnchorElement | HTMLDivElemen
     }
 }
 
+export function alternarAbas(selector: string) {
+    const sections = ['publicacoes', 'salvos', 'marcados']
+    const sectionId = selector.split('-')[1];
+    const elSection = document.getElementById(sectionId) as HTMLElement;
+    const elLine = document.getElementById(selector)?.children[0] as HTMLElement;
+    const elText = document.getElementById(selector)?.children[1] as HTMLElement;
+    sections.forEach((item: string) => {
+        const sec = document.getElementById(item) as HTMLElement;
+        const lin = document.getElementById(`line-${item}`)?.children[0] as HTMLElement;
+        const tex = document.getElementById(`line-${item}`)?.children[1] as HTMLElement;
+        sec.style.display = 'none';
+        lin.style.display = 'none';
+        tex.style.fontWeight = 'normal'
+    })
+    elSection.style.display = 'block';
+    elLine.style.display = 'block';
+    elText.style.fontWeight = 'bold';
+}
+
 export const handleTextareaHeight = (id: string, e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     e.target.style.height = '1em';

@@ -103,7 +103,7 @@ function Login(props: IProps) {
                 </div>
                 
                 <div className="imageLogin">
-                    <img src="https://gifs.eco.br/wp-content/uploads/2023/07/imagens-de-celular-instagram-png-1.png" alt="celular" />
+                    <img src="https://fael-atom.github.io/instagram-login-page/images/instagram-celular.png" alt="celular" />
                 </div>
                 <div className="dataLogin">
                     <div className="formLogin">
