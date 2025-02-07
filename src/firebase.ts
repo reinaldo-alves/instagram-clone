@@ -1,22 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, doc, setDoc, CollectionReference, serverTimestamp, query, orderBy, onSnapshot, Query, DocumentData, QuerySnapshot, DocumentReference, OrderByDirection } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User, onAuthStateChanged, NextOrObserver, signOut } from "firebase/auth";
 import { StorageReference, getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getFunctions } from "firebase/functions";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC05TGXvCxLgIRwHIz3EHzjdcNzlNTYTZU",
-  authDomain: "instagram-clone-reinaldo.firebaseapp.com",
-  projectId: "instagram-clone-reinaldo",
-  storageBucket: "instagram-clone-reinaldo.appspot.com",
-  messagingSenderId: "205894192500",
-  appId: "1:205894192500:web:1486a331c5533e1cdb7021",
-  measurementId: "G-4VP41904C2"
-};
+import { firebaseConfig } from "./credential";
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const db = getFirestore(app);
 const dbCollection = (name: string) => collection(db, name);

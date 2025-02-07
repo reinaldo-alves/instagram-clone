@@ -20,11 +20,11 @@ function PostModal(props: IProps) {
         const currentCommentEl = document.getElementById(elementId) as HTMLTextAreaElement;
         const currentComment = currentCommentEl ? currentCommentEl.value : ''
         const postsRef = dbDoc('posts', id);
-        const commentsCol = dbSubCollection(postsRef, 'comentarios')
+        const commentsCol = dbSubCollection(postsRef, 'comentarios');
         dbAdd(commentsCol, uuidv4(), {
-            nome: props.post.user?.displayName,
+            nome: props.post.user?.email?.split('@')[0],
+            userName: props.post.user?.displayName,
             image: props.post.user?.photoURL,
-            userId: props.post.user?.uid,
             comentario: currentComment,
             timestamp: serverTimestamp()
         });
@@ -41,14 +41,14 @@ function PostModal(props: IProps) {
                 <img src={props.post.info.image} alt={props.post.id} />
                 <div className="modalPostInfo">
                     <div className="postHeaderModal">
-                        <img src={props.post.info.profileImage} alt={props.post.info.userName} />
-                        <p><b>{props.post.info.userName}</b></p>
+                        <img src={props.post.info.profileImage} alt={props.post.info.email.split('@')[0]} />
+                        <p><b>{props.post.info.email.split('@')[0]}</b></p>
                         <p>•••</p>
                     </div>
                     <div style={{padding: '10px 0'}} className="commentBox">
                         <img src={props.post.info.profileImage} alt={props.post.info.userName} />
                         <div className="titleContainer">
-                            <p><b>{props.post.info.userName}</b>{props.post.info.titulo}</p>
+                            <p><b>{props.post.info.email.split('@')[0]}</b>{props.post.info.titulo}</p>
                             <p>{convertTime(props.post.info.timestamp).toString()}</p>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ function PostModal(props: IProps) {
                         <img src={commentIcon} alt="comment" />
                     </div>
                     {props.curtidas.length ? 
-                        <div className="likedby" onClick={(e) => abrirModal(e, `#likesModal-${props.post.id}`)}>Curtido por <b>{props.curtidas[0].info.userName}</b>{props.curtidas.length > 1 ? ' e outros' : ''}</div>
+                        <div className="likedby" onClick={(e) => abrirModal(e, `#likesModal-${props.post.id}`)}>Curtido por <b>{props.curtidas[0].info.email.split('@')[0]}</b>{props.curtidas.length > 1 ? ' e outros' : ''}</div>
                     : <div></div>}
                     </div>
                     {props.post.user?

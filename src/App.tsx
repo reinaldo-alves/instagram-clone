@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className="App">
-      {user?.displayName ?
+      {user?.email ?
         <>        
           <Header user={user} setUser={setUser} setShowProfile={setShowProfile} />
           <div className="postsContainer">

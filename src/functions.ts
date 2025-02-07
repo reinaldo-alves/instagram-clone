@@ -34,7 +34,7 @@ export function fecharModal(selector: string) {
     }
 }
 
-export function abrirModal(e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement, MouseEvent>, selector: string){
+export function abrirModal(e: React.MouseEvent<HTMLSpanElement | HTMLDivElement, MouseEvent>, selector: string){
     e.preventDefault();
     const modal = document.querySelector(selector) as HTMLElement;
     if(modal){
@@ -84,6 +84,7 @@ export const curtir = (id: string, e: React.MouseEvent<HTMLImageElement, MouseEv
         const likeCol = dbSubCollection(postsRef, 'curtidas')
         dbAdd(likeCol, uuidv4(), {
             userName: post.user?.displayName,
+            email: post.user?.email,
             userId: post.user?.uid,
             profileImage: post.user?.photoURL,
             timestamp: serverTimestamp()

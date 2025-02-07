@@ -11,6 +11,9 @@
 # production
 /build
 
+# credential
+/src/credential.ts
+
 # misc
 .DS_Store
 .env.local

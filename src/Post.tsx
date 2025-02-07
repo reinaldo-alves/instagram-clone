@@ -45,7 +45,8 @@ function Post(props: IPost) {
         const postsRef = dbDoc('posts', id);
         const commentsCol = dbSubCollection(postsRef, 'comentarios')
         dbAdd(commentsCol, uuidv4(), {
-            nome: props.user?.displayName,
+            nome: props.user?.email?.split('@')[0],
+            userName: props.user?.displayName,
             image: props.user?.photoURL,
             comentario: currentComment,
             timestamp: serverTimestamp()
@@ -66,8 +67,8 @@ function Post(props: IPost) {
                     <ul>
                         {curtidas.map((val) => (
                             <div key={val.id} className="commentBox" style={{alignItems: 'center'}}>
-                                <img src={val.info.profileImage} alt={val.info.userName} />
-                                <p><b>{val.info.userName}</b></p>
+                                <img src={val.info.profileImage} alt={val.info.email.split('@')[0]} />
+                                <p><b>{val.info.email.split('@')[0]}</b></p>
                             </div>
                         ))}
                     </ul>
@@ -78,7 +79,7 @@ function Post(props: IPost) {
 
             <div className="postHeader">
                 <img src={props.info.profileImage} alt={props.info.userName} />
-                <p><b>{props.info.userName}</b> • {convertTime(props.info.timestamp).toString()}</p>
+                <p><b>{props.info.email.split('@')[0]}</b> • {convertTime(props.info.timestamp).toString()}</p>
                 <p>•••</p>
             </div>
             <img src={props.info.image} alt={props.id} />
@@ -87,9 +88,9 @@ function Post(props: IPost) {
                 <img onClick={(e) => abrirModal(e, `#modal-${props.id}`)} src={commentIcon} alt="comment" />
             </div>
             {curtidas.length ? 
-                <div className="likedby" onClick={(e) => abrirModal(e, `#likesModal-${props.id}`)}>Curtido por <b>{curtidas[0].info.userName}</b>{curtidas.length > 1 ? ' e outros' : ''}</div>
+                <div className="likedby" onClick={(e) => abrirModal(e, `#likesModal-${props.id}`)}>Curtido por <b>{curtidas[0].info.email.split('@')[0]}</b>{curtidas.length > 1 ? ' e outros' : ''}</div>
             : <div></div>}
-            <p><b>{props.info.userName}</b>{props.info.titulo}</p>
+            <p><b>{props.info.email.split('@')[0]}</b>{props.info.titulo}</p>
             {comentarios.length ? 
                 <div className="commentsNumber" onClick={(e) => abrirModal(e, `#modal-${props.id}`)}>{comentarios.length === 1 ? 'Ver 1 comentário' : 'Ver ' + comentarios.length + ' comentários'}</div>
             : <div></div>}

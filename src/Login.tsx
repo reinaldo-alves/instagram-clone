@@ -74,8 +74,8 @@ function Login(props: IProps) {
         const senha = senhaInput? senhaInput.value: '';
         authSignIn(email, senha)
             .then((auth) => {
-                props.setUser(auth.user.displayName);
-                alert(`Usuário ${auth.user.displayName} logado com sucesso!`);
+                props.setUser(auth.user);
+                alert(`Usuário ${auth.user.email?.split('@')[0]} logado com sucesso!`);
                 window.location.href = '/';          
             })
             .catch((error) => {
@@ -92,7 +92,7 @@ function Login(props: IProps) {
                         <h2>Criar Conta</h2>
                         <form onSubmit={(e) => criarConta(e)}>
                             <input id='email-cadastro' type="text" placeholder='E-mail' />
-                            <input id='username-cadastro' type="text" placeholder='Usuário' />
+                            <input id='username-cadastro' type="text" placeholder='Nome e sobrenome' />
                             <input id='senha-cadastro' type="password" placeholder='Senha' />
                             <input id='confsenha-cadastro' type="password" placeholder='Confirme sua senha' />
                             <span>Adicione uma foto de perfil (opcional)</span>
@@ -107,14 +107,14 @@ function Login(props: IProps) {
                 </div>
                 <div className="dataLogin">
                     <div className="formLogin">
-                        <img src='https://freelogopng.com/images/all_img/1658587465instagram-name-logo.png' />
+                        <img src='https://freelogopng.com/images/all_img/1658587465instagram-name-logo.png' alt='Instagram' />
                         <form onSubmit={(e) => handleLogin(e)}>
                             <input id='email-login' type="text" placeholder='E-mail' />
                             <input id='senha-login' type="password" placeholder='Senha' />
                             <input type="submit" name='action' value='Entrar' />
                         </form>
                     </div>
-                    <div className='formSignup'>Não tem uma conta? <a onClick={(e) => abrirModal(e, '.modalCriarConta')} href="#">Cadastre-se</a></div>
+                    <div className='formSignup'>Não tem uma conta? <span onClick={(e) => abrirModal(e, '.modalCriarConta')}>Cadastre-se</span></div>
                 </div>
             </div> 
             <footer>©2023 Desenvolvido por Reinaldo Alves - Todos os direitos reservados</footer>

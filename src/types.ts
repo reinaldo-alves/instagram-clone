@@ -10,6 +10,7 @@ export interface IPost {
     },
     titulo: string,
     userName: string,
+    email: string,
     profileImage: string
   },
   user?: User | null
@@ -31,7 +32,7 @@ export interface IComent {
 export interface ILike {
   id: string,
   info: {
-    userName: string,
+    email: string,
     userId: string,
     profileImage: string,
     timestamp: {

@@ -439,13 +439,14 @@ textarea {
     font-size: 14px;
 }
 
-.formSignup a {
-    background-color: white;
+.formSignup span {
     cursor: pointer;
     color: #0095f6;
-    border: 0;
     font-weight: 600;
-    text-decoration: none;
+}
+
+.formSignup span:hover {
+    text-decoration: underline;
 }
 
 .curtidaContainer {

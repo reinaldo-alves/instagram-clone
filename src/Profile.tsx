@@ -16,7 +16,7 @@ interface IProps {
 
 function Profile(props: IProps) {
        
-    const userPostsArray = props.posts.filter((item: IPost) => item.info.userName === props.user.displayName);
+    const userPostsArray = props.posts.filter((item: IPost) => item.info.email === props.user.email);
 
     const postNumber = userPostsArray.length
     
@@ -25,11 +25,11 @@ function Profile(props: IProps) {
             <section className='perfil-descricao'>
                 <div className='center'>
                     <div className='img-perfil-wraper'>
-                        <img className='img-perfil' src={props.user.photoURL || ''} alt={props.user.displayName || ''} />
+                        <img className='img-perfil' src={props.user.photoURL || ''} alt={props.user.email?.split('@')[0] || ''} />
                     </div>
                     <div className='texto-perfil'>
                         <div className='nome-perfil'>
-                            <span>{props.user.displayName}</span>
+                            <span>{props.user.email?.split('@')[0]}</span>
                             <div className='perfil-buttons'>
                                 <a className='btn-primario' href="#">Editar Perfil</a>
                                 <a className='icon' href="#"><BsGearWide /></a>

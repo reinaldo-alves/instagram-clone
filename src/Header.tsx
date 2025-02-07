@@ -44,6 +44,7 @@ function Header(props: IProps) {
                         titulo: tituloPost,
                         image: downloadURL,
                         userName: props.user.displayName,
+                        email: props.user.email,
                         profileImage: props.user.photoURL,
                         timestamp: serverTimestamp()
                     })
@@ -96,7 +97,7 @@ function Header(props: IProps) {
                         <span>Sair</span>
                     </div>
                     <div className="option-item" onClick={() => props.setShowProfile(true)}>
-                        <img src={props.user.photoURL || ''} alt={props.user.displayName || ''} />
+                        <img src={props.user.photoURL || ''} alt={props.user.email?.split('@')[0] || ''} />
                         <span>Perfil</span>
                     </div>
                 </div>
