@@ -83,7 +83,6 @@ export const curtir = (id: string, e: React.MouseEvent<HTMLImageElement, MouseEv
         const postsRef = dbDoc('posts', id);
         const likeCol = dbSubCollection(postsRef, 'curtidas')
         dbAdd(likeCol, uuidv4(), {
-            userName: post.user?.displayName,
             email: post.user?.email,
             userId: post.user?.uid,
             profileImage: post.user?.photoURL,
